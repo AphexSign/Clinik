@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи сайта</title>
+</head>
+<body>
+
+
+<div sec:authorize="hasAuthority('ADMIN')">
+    <div th:insert="~{fragments/menu_admin :: #nav-menu}"></div>
+</div>
+
+
+<h2 align="center">Список подчиненных:</h2>
+<h2 align="center" th:text="${branch.getTitle()}">12.0</h2>
+
+
+<table border="0" align="center" id="table">
+    <tr BGCOLOR="#DEB887">
+        <td align="center" style="font-weight:bold; font-size:20px">ID</td>
+        <td align="center" style="font-weight:bold; font-size:20px">ФИО</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Логин</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Зашифрованный пароль</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Аккаунт заблокирован</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Роль</td>
+
+        <td align="center" style="font-weight:bold; font-size:20px">Должность</td>
+        <!--        <td></td>-->
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">Cheese</td>
+        <td align="center" th:text="${user.fio}">12.0</td>
+        <td align="center" th:text="${user.name}">12.0</td>
+        <td align="center" th:text="${user.password}">12.0</td>
+        <td align="center" th:text="${user.getArchive()}">12.0</td>
+        <td align="center" th:text="${user.getRole.getTitle()}">12.0</td>
+
+        <td align="center" th:text="${user.profession.getTitle()}">12.0</td>
+
+        <td th:if="${user.getRole.name()=='ADMIN'}">
+
+        </td>
+        <td title="Заблокировать пользователя" th:if="${user.getRole.name()!='OWNER'}">
+            <a th:href="@{/users/{id}/ban(id=${user.id})}"><img th:src="@{/images/banuser.png}" height="32px" width="32px"/></a>
+        </td>
+
+        <td th:if="${user.getRole.name()=='ADMIN'}">
+
+        </td>
+        <td title="Разблокировать пользователя" th:if="${user.getRole.name()!='OWNER'}">
+            <a th:href="@{/users/{id}/unban(id=${user.id})}"><img th:src="@{/images/unbanuser.png}" height="32px" width="32px"/></a>
+        </td>
+
+        <td th:if="${user.getRole.name()=='BANNED' || user.getRole.name()=='OWNER'}">
+
+        </td>
+        <td title="Назначить менеджером" th:if="${user.getRole.name()!='BANNED' && user.getRole.name()!='OWNER'}">
+            <a th:href="@{/users/{id}/mk_manager(id=${user.id})}"><img th:src="@{/images/manager.png}" height="32px" width="32px"/></a>
+        </td>
+
+        <td title="Удалить пользователя" th:if="${user.getRole.name()!='OWNER'}">
+            <a th:href="@{/users/{id}/delete(id=${user.id})}"><img th:src="@{/images/delete.png}" height="32px" width="32px"/></a>
+        </td>
+
+    </tr>
+</table>
+
+
+
+
+<h2>Форма регистрации нового подчиненного</h2>
+
+<div id="form">
+    <form th:method="POST" th:action="@{/user_managment/registration}" th:object="${user}">
+        <label for="name">Введите имя пользователя: </label>
+        <!--    Каждое поле персоны отдаем-->
+        <input type="text" th:field="${user.name}" id="name"/>
+        <!--    Формируем все ошибки-->
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Username Error</div>
+        <br/>
+
+
+        <label for="fio">Введите ФИО: </label>
+        <input type="text" th:field="${user.fio}" id="fio"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}">ФИО Error
+        </div>
+        <br/>
+
+        <label for="email">Введите email: </label>
+        <input type="text" th:field="${user.email}" id="email"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error
+        </div>
+        <br/>
+
+        <label for="address">Введите адрес: </label>
+        <input type="text" th:field="${user.address}" id="address"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error
+        </div>
+        <br/>
+
+        <label for="telephone">Введите телефон: </label>
+        <input type="text" th:field="${user.telephone}" id="telephone"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}">Telephone Error
+        </div>
+
+        <br/>
+        <label for="password">Введите пароль: </label>
+        <input type="password" th:field="${user.password}" id="password"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+        <br/>
+
+
+
+
+        <input type="submit" value="Зарегистрироваться" id="submit"/>
+    </form>
+</div>
+
+
+
+
+
+
+</body>
+</html>

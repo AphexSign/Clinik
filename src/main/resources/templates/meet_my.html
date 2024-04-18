@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+            margin: 4px;
+        }
+
+        #mytable {
+            margin-left: 700px;
+        }
+
+        #form {
+
+            margin-left: auto;
+            margin-right: 300px;
+            width: 60%;
+
+
+            border-radius: 10px;
+            background: white;
+            color: black;
+            /*width: 350px;*/
+            padding: 4px
+        }
+
+        input {
+            width: auto;
+
+        }
+
+        h2 {
+            text-align: center
+        }
+
+        #submit {
+            width: 160px;
+            padding: 3px;
+            margin-left: 100px;
+            margin-bottom: 12px;
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div sec:authorize="hasAuthority('OWNER')">
+    <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+</div>
+
+<div sec:authorize="hasAuthority('ADMIN')">
+    <div th:insert="~{fragments/menu_admin :: #nav-menu}"></div>
+</div>
+
+
+<div sec:authorize="hasAuthority('MANAGER')">
+    <div th:insert="~{fragments/menu_manager :: #nav-menu}"></div>
+</div>
+
+<div sec:authorize="!isAuthenticated()">
+    <div th:insert="~{fragments/menu_guest :: #nav-menu}"></div>
+</div>
+
+<div sec:authorize="hasAuthority('PATIENT')">
+    <div th:insert="~{fragments/menu_patient :: #nav-menu}"></div>
+</div>
+
+
+<!--Вывести список всех филиалов:-->
+
+<h2 align="center">
+    Уважаемый пользователь ваши записи:
+</h2>
+
+<div style="float:left;" id="mytable">
+    <table border="0" align="center">
+        <tr BGCOLOR="#DEB887">
+            <td align="center" style="font-weight:bold; font-size:20px">Id записи</td>
+            <td align="center" style="font-weight:bold; font-size:20px">ФИО врача</td>
+            <td align="center" style="font-weight:bold; font-size:20px">ФИО пациента</td>
+            <td align="center" style="font-weight:bold; font-size:20px">Время записи</td>
+        </tr>
+        <tr th:each="meeting : ${meetings}">
+            <td align="center" th:text="${meeting.id}">1</td>
+            <td align="center" th:text="${meeting.getDoctor().getFio()}">200</td>
+            <td align="center" th:text="${meeting.getPatient().getFio()}">200</td>
+            <td align="center" th:text="${#temporals.format(meeting.getSchedule().getSlot(), 'dd.MM.YYYY hh:mm')}">200
+            </td>
+            <td><a title="Удалить запись" th:href="@{/meeting/{id}/cancel(id=${meeting.id})}"><img
+                    th:src="@{/images/cancel.png}" height="32px" width="32px"/></a></td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>

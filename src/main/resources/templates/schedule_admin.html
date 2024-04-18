@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Меняем расписание</title>
+
+
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+            margin: 4px;
+        }
+
+        input {
+            width: auto
+        }
+
+        h2 {
+            text-align: center
+        }
+
+        #submit {
+            width: 130px;
+            padding: 3px;
+            margin-left: 100px;
+            margin-bottom: 12px;
+        }
+    </style>
+
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<h2>Изменение данных о расписании</h2>
+
+<p style="color:black; font-weight:bold; font-size:18px"> Имя сотрудника: <span th:text="${team.getUser().getFio()}"/>
+<p/>
+<p style="color:black; font-weight:bold; font-size:18px"> Отделение: <span
+        th:text="${team.getStructure().getDepartment().getLabel()}"/>
+<p/>
+<p style="color:black; font-weight:bold; font-size:18px"> Номер команды: <span th:text="${team.id}"/>
+<p/>
+
+
+<div id="form2">
+    <form th:method="POST" th:action="@{'/schedule_team/'+${team.id}+'/add'}" th:object="${times}">
+
+        <label for="date_start">Введите день для графика: </label>
+        <input type="date" th:field="${times.date_start}" th:format="'yyyy-MM-dd'" id="date_start"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('date_start')}"
+             th:errors="*{date_start}">Project Error
+        </div>
+
+        <br>
+        <label for="hourBegin"> Выберите время начала: </label>
+        <select id="hourBegin" name="hourBegin">
+            <option th:each="item : ${#numbers.sequence(6,22)}" th:text="${item}" th:value="${item}"/>
+        </select>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('hourBegin')}" th:errors="*{hourBegin}">
+            hourBegin Error
+        </div>
+
+        <br>
+
+        <label for="hourEnd"> Выберите время окончания: </label>
+        <select id="hourEnd" name="hourEnd">
+            <option th:each="item : ${#numbers.sequence(6,22)}" th:text="${item}" th:value="${item}"/>
+        </select>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('hourEnd')}" th:errors="*{hourEnd}">
+            hourEnd Error
+        </div>
+
+        <br>
+        <label for="interval"> Промежуток между окнами: </label>
+        <select id="interval" name="interval">
+            <option th:each="item : ${#numbers.sequence(1,6)}" th:text="${item*10}" th:value="${item*10}"/>
+        </select>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('interval')}" th:errors="*{interval}">
+            interval Error
+        </div>
+
+        <br>
+
+
+        </br>
+
+        <input type="submit" value="Создать график" id="submit"/>
+    </form>
+</div>
+
+
+<div id="form" style="float:none;">
+    <ul>
+        <th:block th:each="schedule : ${schedules}">
+            <table>
+                <tr BGCOLOR="#6ec5de">
+                    <!--                    <td align="center" style="font-weight:bold; font-size:20px" th:text="${schedule.id}"></td>-->
+                    <td align="justify" th:text="${#temporals.format(schedule.slot, 'dd.MM.YYYY')}"></td>
+                </tr>
+                <tr BGCOLOR="#b4dade">
+                    <!--                    <td align="justify" th:text="${schedule.slot}"></td>-->
+                    <td align="center" th:text="${#temporals.format(schedule.slot, 'HH:mm')}"></td>
+                </tr>
+            </table>
+            <br>
+        </th:block>
+    </ul>
+</div>
+
+
+<a th:href="@{/schedule_team/{id_team}/remove(id_team=${team.id})}"><img title="Убрать расписание"
+                                                                         th:src="@{/images/cancel.png}" height="32px"
+                                                                         width="32px"/></a>
+
+</body>
+</html>

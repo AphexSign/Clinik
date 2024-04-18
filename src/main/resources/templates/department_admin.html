@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление справочником отделов</title>
+
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+            margin: 4px;
+        }
+
+        #mytable {
+            margin-left: 700px;
+        }
+
+        #form {
+
+            margin-left: auto;
+            margin-right: 600px;
+            width: 15%;
+
+
+            border-radius: 10px;
+            background: dodgerblue;
+            color: white;
+            padding: 4px
+        }
+
+        input {
+            width: auto;
+
+        }
+
+        h2 {
+            text-align: center
+        }
+
+        #submit {
+            width: 160px;
+            padding: 3px;
+            margin-left: 100px;
+            margin-bottom: 12px;
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h2 align="center">Управление справочником отделов:</h2>
+
+<div style="float:left;" id="mytable">
+    <table border="0" align="center">
+        <tr BGCOLOR="#DEB887">
+            <td align="center" style="font-weight:bold; font-size:20px">Id отдела</td>
+            <td align="center" style="font-weight:bold; font-size:20px">Наименование отдела</td>
+        </tr>
+        <tr th:each="department : ${departments}">
+            <td align="center" th:text="${department.id}">1</td>
+            <td align="center" th:text="${department.label}">200</td>
+            <td><a title="Редактировать отдел" th:href="@{/department_admin/{id}/edit(id=${department.id})}"><img
+                    th:src="@{/images/departmentModify.png}" height="32px" width="32px"/></a></td>
+            <td><a title="Удалить отдел" th:href="@{/department_admin/{id}/delete(id=${department.id})}"><img
+                    th:src="@{/images/delete.png}" height="32px" width="32px"/></a></td>
+        </tr>
+    </table>
+</div>
+
+<div id="form" style="float:right;">
+    <form th:method="POST" th:action="@{/department_admin}" th:object="${department}">
+        <p>
+            <label for="title">Введите наименование отдела: </label>
+            <input type="text" th:field="${department.label}" id="title" placeholder="---отдел---"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('label')}" th:errors="*{label}">Title
+            Error
+        </div>
+        </p>
+
+        <input type="submit" value="Добавить отдел" id="submit"/>
+    </form>
+
+</div>
+
+</body>
+</html>

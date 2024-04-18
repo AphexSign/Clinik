@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+            margin: 4px;
+        }
+
+
+        #mytable {
+            margin-left: 700px;
+        }
+
+        input {
+            width: auto
+        }
+
+        h2 {
+            text-align: center
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h2 align="center"> Назначаем сотруднику: <span th:text="${user.fio}"> </span> - новую профессию</h2>
+
+
+<div style="float:left;" id="mytable">
+    <table border="0" align="center">
+        <tr BGCOLOR="#DEB887">
+            <td align="center" style="font-weight:bold; font-size:20px">Id должности</td>
+            <td align="center" style="font-weight:bold; font-size:20px">Наименование профессии</td>
+
+        </tr>
+        <tr th:each="profession : ${professions}">
+            <td align="center" th:text="${profession.id}">1</td>
+            <td align="center" th:text="${profession.title}">200</td>
+            <td><a title="Добавить профессию"
+                   th:href="@{/profession_user/{id_user}/add/{id_profession}(id_profession=${profession.id}, id_user=${user.id})}"><img
+                    th:src="@{/images/plus.png}" height="32px" width="32px"/></a></td>
+            <td><a title="Удалить профессию"
+                   th:href="@{/profession_user/{id_user}/remove/{id_profession}(id_profession=${profession.id}, id_user=${user.id})}"><img
+                    th:src="@{/images/cancel.png}" height="32px" width="32px"/></a></td>
+
+            <td th:if="${user.isGraduated(__${profession.id}__)==true}">
+                <span style="color: orange;"><img title="Навык дипломирован" th:src="@{/images/contract.png}"
+                                                  height="32px" width="32px"/></span>
+            </td>
+
+
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление справочником профессий</title>
+
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+            margin: 4px;
+        }
+
+        #mytable {
+            margin-left: 700px;
+        }
+
+        #form {
+
+            margin-left: auto;
+            margin-right: 600px;
+            width: 15%;
+
+
+            border-radius: 10px;
+            background: dodgerblue;
+            color: white;
+            /*width: 350px;*/
+            padding: 4px
+        }
+
+        input {
+            width: auto;
+
+        }
+
+        h2 {
+            text-align: center
+        }
+
+        #submit {
+            width: 160px;
+            padding: 3px;
+            margin-left: 100px;
+            margin-bottom: 12px;
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h2 align="center">Управление справочником профессий:</h2>
+
+<div style="float:left;" id="mytable">
+    <table border="0" align="center">
+        <tr BGCOLOR="#DEB887">
+            <td align="center" style="font-weight:bold; font-size:20px">Id должности</td>
+            <td align="center" style="font-weight:bold; font-size:20px">Наименование профессии</td>
+        </tr>
+        <tr th:each="profession : ${professions}">
+            <td align="center" th:text="${profession.id}">1</td>
+            <td align="center" th:text="${profession.title}">200</td>
+            <td><a title="Редактировать профессию" th:href="@{/profession_admin/{id}/edit(id=${profession.id})}"><img
+                    th:src="@{/images/manager.png}" height="32px" width="32px"/></a></td>
+            <td><a title="Удалить профессию" th:href="@{/profession_admin/{id}/delete(id=${profession.id})}"><img
+                    th:src="@{/images/delete.png}" height="32px" width="32px"/></a></td>
+        </tr>
+    </table>
+</div>
+
+<div id="form" style="float:right;">
+    <form th:method="POST" th:action="@{/profession_admin}" th:object="${profession}">
+        <p>
+            <label for="title">Введите наименование профессии: </label>
+            <input type="text" th:field="${profession.title}" id="title" placeholder="---профессия---"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title
+            Error
+        </div>
+        </p>
+
+        <input type="submit" value="Добавить профессию" id="submit"/>
+    </form>
+
+</div>
+
+</body>
+</html>

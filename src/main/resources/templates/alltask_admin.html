@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Назначить исполнителя</title>
+</head>
+<body>
+
+
+<div sec:authorize="hasAuthority('ADMIN')">
+    <div th:insert="~{fragments/menu_admin :: #nav-menu}"></div>
+</div>
+
+
+<h2 align="center">Все задачи:</h2>
+
+<table border="0" align="center" id="table">
+    <tr BGCOLOR="#DEB887">
+        <td align="center" style="font-weight:bold; font-size:20px">ID</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Название задачи</td>
+
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}">Cheese</td>
+        <td align="center" th:text="${task.name}">12.0</td>
+
+
+    </tr>
+</table>
+
+
+</body>
+</html>

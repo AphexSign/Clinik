@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table id="nav-menu" width="100%">
+    <tr>
+        <td align="center">
+            <table>
+                <tr>
+                    <td><img th:src="@{/images/menu.png}" height="49px" width="151px"/></td>
+                    <td><a th:href="@{/hello}"> <img th:src="@{/images/main.png}" height="49px" width="151px"/> </a>
+                    </td>
+
+                    <td><a th:href="@{/meet_branch}"> <img th:src="@{/images/meeting.png}" height="49px" width="151px"/>
+                    </a></td>
+                    <td><a th:href="@{/meeting_my}"> <img th:src="@{/images/meeting_my.png}" height="49px"
+                                                          width="151px"/> </a></td>
+                    <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/team_admin}"><img
+                            th:src="@{/images/teams_admin.png}" height="49px" width="151px"/> </a></td>
+                    <td sec:authorize="hasAuthority('ADMIN') or hasAuthority('OWNER')"><a th:href="@{/project_new}"><img
+                            th:src="@{/images/new_project.png}" height="49px" width="151px"/> </a></td>
+                </tr>
+            </table>
+
+        <td align="right">
+            <div sec:authorize="isAuthenticated()">
+                <div>
+                    Приветствую, <span sec:authentication="principal.username">Bill</span>
+                </div>
+                <div>
+                    <a th:href="@{/logout}">Покинуть сайт</a>
+                </div>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                <div>
+                    Приветствуем вас, Гость. Пожалуйста, пройдите <a th:href="@{/auth/login}">Аутентификацию</a>
+                    <br/>
+                    или <a th:href="@{/auth/registration}">Зарегистрируетесь</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

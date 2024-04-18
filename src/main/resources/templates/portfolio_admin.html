@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление портфолио кадров</title>
+
+
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+            margin: 4px;
+        }
+
+        #form {
+            margin-left: auto;
+            margin-right: auto;
+            width: 15%;
+
+
+            border-radius: 10px;
+            background: dodgerblue;
+            color: white;
+            /*width: 350px;*/
+            padding: 4px
+        }
+
+        input {
+            width: auto
+        }
+
+        h2 {
+            text-align: center
+        }
+
+        #submit {
+            width: 130px;
+            padding: 3px;
+            margin-left: 100px;
+            margin-bottom: 12px;
+
+        }
+
+    </style>
+
+
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h1 align="center">Сотрудники и портфолио: </h1>
+
+
+<table border="0" align="center" id="table">
+    <tr BGCOLOR="#DEB887">
+        <td align="center" style="font-weight:bold; font-size:20px">ID</td>
+        <td align="center" style="font-weight:bold; font-size:20px">ФИО</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Компетенции</td>
+
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">Cheese</td>
+        <td align="center" th:text="${user.fio}">12.0</td>
+        <td align="center" th:text="${user.getGraduations()}">12.0</td>
+
+
+        <td title="Изменить профессию">
+            <a th:href="@{/user/{id_user}/portfolio(id_user=${user.id})}"><img th:src="@{/images/diplom_modify.png}"
+                                                                               height="32px" width="32px"/></a>
+        </td>
+
+
+    </tr>
+</table>
+
+
+</body>
+</html>

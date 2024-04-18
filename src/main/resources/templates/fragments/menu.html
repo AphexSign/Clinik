@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table id="nav-menu" width="100%">
+    <tr>
+        <td align="center">
+            <table>
+                <tr>
+                    <td><img th:src="@{/images/menu.png}" height="49px" width="151px"/></td>
+                    <td><a th:href="@{/hello}"> <img th:src="@{/images/main.png}" height="49px" width="151px"/> </a>
+                    </td>
+                    <td sec:authorize="hasAuthority('OWNER')"><a th:href="@{/branch_admin}"><img
+                            th:src="@{/images/admin_organization.png}" height="49px" width="151px"/> </a></td>
+                    <td sec:authorize="hasAuthority('OWNER')"><a th:href="@{/department_admin}"><img
+                            th:src="@{/images/admin_department.png}" height="49px" width="151px"/> </a></td>
+                    <td sec:authorize="hasAuthority('OWNER')"><a th:href="@{/profession_admin}"><img
+                            th:src="@{/images/admin_profession.png}" height="49px" width="151px"/> </a></td>
+                    <td sec:authorize="hasAuthority('OWNER')"><a th:href="@{/portfolio_admin}"><img
+                            th:src="@{/images/admin_portfolio.png}" height="49px" width="151px"/> </a></td>
+                    <td sec:authorize="hasAuthority('OWNER')"><a th:href="@{/admin_managment}"><img
+                            th:src="@{/images/admin_managment.png}" height="49px" width="151px"/> </a></td>
+                </tr>
+            </table>
+
+
+        <td align="right">
+            <div sec:authorize="isAuthenticated()">
+                <div>
+                    Приветствую, <span sec:authentication="principal.username">Bill</span>
+                </div>
+                <div>
+                    <a th:href="@{/logout}">Покинуть сайт</a>
+                </div>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                <div>
+                    Приветствуем вас, Гость. Пожалуйста, пройдите <a th:href="@{/auth/login}">Аутентификацию</a>
+                    <br/>
+                    или <a th:href="@{/auth/registration}">Зарегистрируетесь</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

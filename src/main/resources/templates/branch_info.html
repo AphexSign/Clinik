@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Данные о филиале</title>
+
+
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+            margin: 4px;
+        }
+
+        #form {
+            margin-left: auto;
+            margin-right: auto;
+            width: 15%;
+
+
+            border-radius: 10px;
+            background: dodgerblue;
+            color: white;
+            padding: 4px
+        }
+
+        input {
+            width: auto
+        }
+
+        h2 {
+            text-align: center
+        }
+
+        #submit {
+            width: 130px;
+            padding: 3px;
+            margin-left: 100px;
+            margin-bottom: 12px;
+
+        }
+
+    </style>
+
+
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div id="form">
+    <h2>Изменение данных о филиале</h2>
+    <form th:method="POST" th:action="@{/branch_info}" th:object="${branch}">
+
+        <p>
+            <input type="hidden" th:value="${branch.getId()}" name="id" id="id" readonly/>
+        </p>
+
+        <p>
+            <label for="title">Введите новое название филиала: </label>
+            <input type="text" th:value="${branch.title}" name="title" id="title"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title
+            Error
+        </div>
+        </p>
+
+
+        <input type="submit" value="Изменить данные" id="submit"/>
+    </form>
+</div>
+
+
+
+<h2 align="center">Добавить отдел к филиалу:</h2>
+<h2 align="center" th:text="${branch.title}">12.0</h2>
+
+
+<table border="0" align="center" id="table">
+    <tr BGCOLOR="#DEB887">
+        <td align="center" style="font-weight:bold; font-size:20px">ID</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Название отдела</td>
+
+    </tr>
+    <tr th:each="department : ${departments}">
+        <td th:text="${department.id}">Cheese</td>
+        <td align="center" th:text="${department.label}">12.0</td>
+
+
+        <td title="Добавить отдел">
+            <a th:href="@{/department/{id_department}/assigment/branch/{id_branch}/assign(id_department=${department.id}, id_branch=${branch.id})}"><img
+                    th:src="@{/images/plus.png}" height="32px" width="32px"/></a>
+        </td>
+
+        <td title="Снять отдел">
+            <a th:href="@{/department/{id_department}/assigment/branch/{id_branch}/unassign(id_department=${department.id}, id_branch=${branch.id})}"><img
+                    th:src="@{/images/cancel.png}" height="32px" width="32px"/></a>
+        </td>
+
+
+        <td th:if="${department.isAssigned(__${branch.id}__)==true}">
+            <span style="color: orange;"><img title="Отдел открыт" th:src="@{/images/contract.png}" height="32px"
+                                              width="32px"/></span>
+            <a th:href="@{/department/{id_department}/assigment/branch/{id_branch}/team(id_department=${department.id}, id_branch=${branch.id})}"><img
+                    title="Назначить врачей" th:src="@{/images/doctorModify.png}" height="32px" width="32px"/></a>
+        </td>
+
+
+        </td>
+
+    </tr>
+</table>
+
+
+</body>
+</html>

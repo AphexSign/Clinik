@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи проекта</title>
+</head>
+<body>
+
+
+<div sec:authorize="hasAuthority('ADMIN')">
+    <div th:insert="~{fragments/menu_admin :: #nav-menu}"></div>
+</div>
+
+
+<h2 align="center">Список задач проекта:</h2>
+<h2 align="center" th:text="${titled_project.getTitle()}">12.0</h2>
+
+
+<table border="0" align="center" id="table">
+    <tr BGCOLOR="#DEB887">
+        <td align="center" style="font-weight:bold; font-size:20px">ID</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Название</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Тип</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Дата начала</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Дата окончания</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Автор задачи</td>
+        <td align="center" style="font-weight:bold; font-size:20px">Описание задачи</td>
+
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}">1</td>
+        <td align="center" th:text="${task.name}">Project1</td>
+        <td align="center" th:text="${task.type}">Project1</td>
+        <td align="center" th:text="${task.date_start}">Project1</td>
+        <td align="center" th:text="${task.date_end}">Project1</td>
+        <td align="center" th:text="${task.getAuthorName()}"></td>
+        <td align="center" th:text="${task.description}"></td>
+
+
+        <td title="Изменить задачу">
+            <a th:href="@{/task/{id}/edit(id=${task.id})}"><img th:src="@{/images/gear.png}" height="32px" width="32px"/></a>
+        </td>
+
+
+        <td title="Назначить исполнителя">
+            <a th:href="@{/task/{id}/assigment(id=${task.id})}"><img th:src="@{/images/assign_user.png}" height="49px" width="151px"/></a>
+        </td>
+
+    </tr>
+</table>
+
+
+    <h2>Форма создания новой задачи</h2>
+
+    <div id="form">
+        <form th:method="POST" th:action="@{'/project/'+${titled_project.id}+'/task'}" th:object="${task}">
+<!--            <form th:method="POST" th:action="@{/project/{id}/tasks}" th:object="${task}">-->
+
+            <input type="hidden" name="projectId" th:value="${titled_project.id}" />
+
+            <label for="project"> Выберите проект: </label>
+            <select id="project" name="project"> <option th:each="project:${projects}" th:text="${project.title}" th:value="${project.id}" /></select>
+            <!--            <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('project')}" th:errors="*{project}">project Error</div>-->
+            <br/>
+
+            <label for="name">Введите название задачи: </label>
+            <input type="text" th:field="${task.name}" id="name"/>
+            <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Project Error</div>
+            <br/>
+
+            <label for="type">Введите название задачи: </label>
+            <input type="text" th:field="${task.type}" id="type"/>
+            <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Project Error</div>
+            <br/>
+
+            <label for="date_start">Введите дату начала задачи: </label>
+            <input type="date" th:field="${task.date_start}" th:format="'yyyy-MM-dd'" id="date_start"/>
+            <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('date_start')}" th:errors="*{date_start}">Project Error</div>
+            <br/>
+
+            <label for="date_end">Введите дату конца задачи: </label>
+            <input type="date" th:field="${task.date_end}" th:format="'yyyy-MM-dd'" id="date_end"/>
+            <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('date_end')}" th:errors="*{date_end}">Project Error</div>
+            <br/>
+
+
+            <textarea class="form-control" id="message" rows="10"
+                      name="message"
+                      placeholder="---Суть задачи---" th:field="${task.description}"
+                      required="required"></textarea>
+
+            <br>
+
+            </br>
+
+
+
+            <input type="submit" value="Создать задачу" id="submit"/>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+</table>

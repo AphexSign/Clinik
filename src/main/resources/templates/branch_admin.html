@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление справочником филиалов</title>
+
+    <style type="text/css">
+        label {
+            width: 100px;
+            display: inline-block;
+            margin: 4px;
+        }
+
+        #mytable {
+            margin-left: 700px;
+        }
+
+        #form {
+
+            margin-left: auto;
+            margin-right: 600px;
+            width: 15%;
+
+
+            border-radius: 10px;
+            background: dodgerblue;
+            color: white;
+            /*width: 350px;*/
+            padding: 4px
+        }
+
+        input {
+            width: auto;
+
+        }
+
+        h2 {
+            text-align: center
+        }
+
+        #submit {
+            width: 160px;
+            padding: 3px;
+            margin-left: 100px;
+            margin-bottom: 12px;
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h2 align="center">Управление справочником филиалов:</h2>
+
+<div style="float:left;" id="mytable">
+    <table border="0" align="center">
+        <tr BGCOLOR="#DEB887">
+            <td align="center" style="font-weight:bold; font-size:20px">Id филиала</td>
+            <td align="center" style="font-weight:bold; font-size:20px">Наименование филиала</td>
+        </tr>
+        <tr th:each="branch : ${branches}">
+            <td align="center" th:text="${branch.id}">1</td>
+            <td align="center" th:text="${branch.title}">200</td>
+            <td><a title="Редактировать филиал" th:href="@{/branch_admin/{id}/edit(id=${branch.id})}"><img
+                    th:src="@{/images/branchModify.png}" height="32px" width="32px"/></a></td>
+            <td><a title="Удалить филиал" th:href="@{/branch_admin/{id}/delete(id=${branch.id})}"><img
+                    th:src="@{/images/delete.png}" height="32px" width="32px"/></a></td>
+        </tr>
+    </table>
+</div>
+
+<div id="form" style="float:right;">
+    <form th:method="POST" th:action="@{/branch_admin}" th:object="${branch}">
+        <p>
+            <label for="title">Введите наименование филиала: </label>
+            <input type="text" th:field="${branch.title}" id="title" placeholder="---организация---"/>
+        <div style="color:yellow; font-weight:bold" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title
+            Error
+        </div>
+        </p>
+
+        <input type="submit" value="Добавить организацию" id="submit"/>
+    </form>
+
+</div>
+
+</body>
+</html>
