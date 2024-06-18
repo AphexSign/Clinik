@@ -30,7 +30,7 @@ population INTEGER,
 climat VARCHAR(50),
 parts INTEGER
 );
-
+-
 ### 2.3. Вносим 3 записи:
 + INSERT INTO cities VALUES (1,'Toronto',50000,'Tropical',1),
 + INSERT INTO cities VALUES (2,'Monreal',70000,'Arctic',3),
