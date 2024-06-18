@@ -28,25 +28,25 @@ climat VARCHAR(50),
 parts INTEGER
 );
 
-2.3. Вносим 3 записи:
+### 2.3. Вносим 3 записи:
 + INSERT INTO cities VALUES (1,'Toronto',50000,'Tropical',1),
 + INSERT INTO cities VALUES (2,'Monreal',70000,'Arctic',3),
 + INSERT INTO cities VALUES (3,'Edmonton',80000,'Continental',5)
 
-2.4. Вносим изменения в 3 записи:
+### 2.4. Вносим изменения в 3 записи:
 + UPDATE cities SET title='Quebec' WHERE id=3;
 + UPDATE cities SET population=90000 WHERE parts=5;
 + UPDATE cities SET climat='Arctic' WHERE id=1
 
-2.5. Добавляем 1 колонку к таблице:
+### 2.5. Добавляем 1 колонку к таблице:
 + ALTER TABLE cities ADD COLUMN extra INTEGER
 
-2.6. Удаляем 2 записи:
+### 2.6. Удаляем 2 записи:
 + DELETE FROM cities WHERE id=1;
 + DELETE FROM cities WHERE title='Quebec'
 
-2.7. Очищаем таблицу:
+### 2.7. Очищаем таблицу:
 + DELETE FROM books; 
 
-2.8. Удаляем таблицу
+### 2.8. Удаляем таблицу
 + DROP TABLE cities; 
