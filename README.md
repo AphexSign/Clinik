@@ -9,6 +9,7 @@
 + 1.2. Произвел установку
 + 1.3. Открыл командную строку через "cmd" в Windows
 + 1.4. Ввел команду "java -version". Получен ответ:
+ 
  java version "1.8.0_351"
 
  Java(TM) SE runtime Environment(build 1.8.0_351-b10)
