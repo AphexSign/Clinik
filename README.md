@@ -17,10 +17,10 @@
 Установлена PostgreSQL 16.3-2, 64-bit, для работы с БД использована pgAdmin4
 
 2.1. Создаем базу данных:
-CREATE DATABASE geo_db
++ CREATE DATABASE geo_db
 
 2.2. С помощью "Query Tool" cоздаем таблицу с 5-ю атрибутами:
-CREATE TABLE cities(
++ CREATE TABLE cities(
 id INTEGER,
 title VARCHAR(50),
 population INTEGER,
