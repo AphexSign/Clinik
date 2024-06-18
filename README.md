@@ -1,17 +1,17 @@
-Продукт: https://www.alefowl.com/
-Дата проведения работ: 18.06.2024
-Система: Windows 10 Домашняя
-День стажировки: 6
+# Продукт: https://www.alefowl.com/
+# Дата проведения работ: 18.06.2024
+# Система: Windows 10 Домашняя
+# День стажировки: 6
 
 ###  Задача 1. Установка JDK, JAVA 8:
-1.1. Скачал файл по ссылке https://www.filepuma.com/download/java_development_kit_64bit_8.0.3510.10-33896/
++ 1.1. Скачал файл по ссылке https://www.filepuma.com/download/java_development_kit_64bit_8.0.3510.10-33896/
  "Java_Development_Kit_(64bit)_v8_Update_351.exe"
-1.2. Произвел установку
-1.3. Открыл командную строку через "cmd" в Windows
-1.4. Ввел команду "java -version". Получен ответ:
-java version "1.8.0_351"
-Java(TM) SE runtime Environment(build 1.8.0_351-b10)
-Java HotSpot(TM) 64-Bit Server VM (build 25.351-b10, mixed mode) 
++ 1.2. Произвел установку
++ 1.3. Открыл командную строку через "cmd" в Windows
++ 1.4. Ввел команду "java -version". Получен ответ:
++ java version "1.8.0_351"
++ Java(TM) SE runtime Environment(build 1.8.0_351-b10)
++ Java HotSpot(TM) 64-Bit Server VM (build 25.351-b10, mixed mode) 
 
 ###  Задача 2. Установка СУБД и работа с запросами:
 Установлена PostgreSQL 16.3-2, 64-bit, для работы с БД использована pgAdmin4
